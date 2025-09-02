@@ -31,18 +31,10 @@ if (uni.restoreGlobal) {
 }
 (function(vue) {
   "use strict";
-  const _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-  const _sfc_main$9 = {};
-  function _sfc_render$8(_ctx, _cache) {
-    return vue.openBlock(), vue.createElementBlock("view");
-  }
-  const PagesDemo4Demo4 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/pages/demo4/demo4.vue"]]);
+  const ON_SHOW = "onShow";
+  const ON_HIDE = "onHide";
+  const ON_LOAD = "onLoad";
+  const ON_READY = "onReady";
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -53,6 +45,84 @@ if (uni.restoreGlobal) {
   function resolveEasycom(component, easycom) {
     return typeof component === "string" ? easycom : component;
   }
+  const createLifeCycleHook = (lifecycle, flag = 0) => (hook, target = vue.getCurrentInstance()) => {
+    !vue.isInSSRComponentSetup && vue.injectHook(lifecycle, hook, target);
+  };
+  const onShow = /* @__PURE__ */ createLifeCycleHook(
+    ON_SHOW,
+    1 | 2
+    /* HookFlags.PAGE */
+  );
+  const onHide = /* @__PURE__ */ createLifeCycleHook(
+    ON_HIDE,
+    1 | 2
+    /* HookFlags.PAGE */
+  );
+  const onLoad = /* @__PURE__ */ createLifeCycleHook(
+    ON_LOAD,
+    2
+    /* HookFlags.PAGE */
+  );
+  const onReady = /* @__PURE__ */ createLifeCycleHook(
+    ON_READY,
+    2
+    /* HookFlags.PAGE */
+  );
+  const _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$a = {
+    __name: "Demo4Childe",
+    setup(__props, { expose: __expose }) {
+      __expose();
+      const name = vue.ref("张三");
+      onLoad(() => {
+        name.value = "里斯";
+        formatAppLog("log", "at components/Demo4Childe/Demo4Childe.vue:13", "onLoad 函数");
+      });
+      onReady(() => {
+      });
+      const __returned__ = { name, ref: vue.ref, get onLoad() {
+        return onLoad;
+      }, get onReady() {
+        return onReady;
+      } };
+      Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
+      return __returned__;
+    }
+  };
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", null, " 4444444 ");
+  }
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/components/Demo4Childe/Demo4Childe.vue"]]);
+  const _sfc_main$9 = {
+    __name: "demo4",
+    setup(__props, { expose: __expose }) {
+      __expose();
+      const child = vue.ref(null);
+      const update = function() {
+      };
+      const __returned__ = { child, update, onMounted: vue.onMounted, ref: vue.ref };
+      Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
+      return __returned__;
+    }
+  };
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_Demo4Childe = resolveEasycom(vue.resolveDynamicComponent("Demo4Childe"), __easycom_0$3);
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createVNode(_component_Demo4Childe),
+      vue.createElementVNode("view", null, "--------"),
+      vue.createElementVNode("button", {
+        onClick: _cache[0] || (_cache[0] = (...args) => _ctx.pdate && _ctx.pdate(...args))
+      }, "点击修改子值"),
+      vue.createElementVNode("navigator", { url: "/pages/demo3/demo3?name=王五&age=19" }, "跳转到demo3")
+    ]);
+  }
+  const PagesDemo4Demo4 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/pages/demo4/demo4.vue"]]);
   const _sfc_main$8 = {
     __name: "demo3child",
     emits: ["onAaa", "onBbb", "change"],
@@ -89,7 +159,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-7b5f4e45"], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/components/demo3child/demo3child.vue"]]);
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-7b5f4e45"], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/components/demo3child/demo3child.vue"]]);
   const _sfc_main$7 = {
     __name: "demo3",
     setup(__props, { expose: __expose }) {
@@ -97,20 +167,44 @@ if (uni.restoreGlobal) {
       const num = vue.ref(0);
       const color = vue.ref("#ccc");
       const inputStr = vue.ref("123");
+      const name = vue.ref("张三");
+      const age = vue.ref("18");
       const onAaaClick = function(e) {
-        formatAppLog("log", "at pages/demo3/demo3.vue:16", e);
+        formatAppLog("log", "at pages/demo3/demo3.vue:24", e);
         num.value = e;
         color.value = "#" + String(e).substring(3, 6);
       };
       const onBbbClick = function(e) {
-        formatAppLog("log", "at pages/demo3/demo3.vue:23", e);
+        formatAppLog("log", "at pages/demo3/demo3.vue:31", e);
         num.value = e;
         color.value = "#" + String(e).substring(3, 6);
       };
       const onchange = function(v) {
         inputStr.value = v;
       };
-      const __returned__ = { num, color, inputStr, onAaaClick, onBbbClick, onchange, ref: vue.ref };
+      onLoad((e) => {
+        formatAppLog("log", "at pages/demo3/demo3.vue:42", "onLoad 函数");
+        name.value = e.name;
+        age.value = e.age;
+      });
+      onShow((e) => {
+        formatAppLog("log", "at pages/demo3/demo3.vue:48", "onShow 函数");
+      });
+      onHide((e) => {
+        formatAppLog("log", "at pages/demo3/demo3.vue:53", "onHide 函数");
+      });
+      onReady((e) => {
+        formatAppLog("log", "at pages/demo3/demo3.vue:60", "onReady 函数");
+      });
+      const __returned__ = { num, color, inputStr, name, age, onAaaClick, onBbbClick, onchange, ref: vue.ref, get onLoad() {
+        return onLoad;
+      }, get onReady() {
+        return onReady;
+      }, get onShow() {
+        return onShow;
+      }, get onHide() {
+        return onHide;
+      } };
       Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
       return __returned__;
     }
@@ -146,10 +240,18 @@ if (uni.restoreGlobal) {
         vue.toDisplayString($setup.inputStr),
         1
         /* TEXT */
-      )
+      ),
+      vue.createElementVNode(
+        "view",
+        null,
+        vue.toDisplayString($setup.name) + " " + vue.toDisplayString($setup.age),
+        1
+        /* TEXT */
+      ),
+      vue.createElementVNode("navigator", { url: "/pages/Demo2/Demo2" }, "跳转到Demo2")
     ]);
   }
-  const PagesDemo3Demo3 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/pages/demo3/demo3.vue"]]);
+  const PagesDemo3Demo3 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/pages/demo3/demo3.vue"]]);
   const _sfc_main$6 = {};
   function _sfc_render$5(_ctx, _cache) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "layout" }, [
@@ -164,7 +266,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-e7d81565"], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/components/LayoutContainer/LayoutContainer.vue"]]);
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-e7d81565"], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/components/LayoutContainer/LayoutContainer.vue"]]);
   const _sfc_main$5 = {};
   function _sfc_render$4(_ctx, _cache) {
     const _component_LayoutContainer = resolveEasycom(vue.resolveDynamicComponent("LayoutContainer"), __easycom_0$1);
@@ -191,7 +293,7 @@ if (uni.restoreGlobal) {
       })
     ]);
   }
-  const PagesDemo2Demo2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/pages/Demo2/Demo2.vue"]]);
+  const PagesDemo2Demo2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/pages/Demo2/Demo2.vue"]]);
   const _sfc_main$4 = {
     __name: "Home",
     props: ["userName", "age", "sex"],
@@ -230,7 +332,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-a66d8dc5"], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/components/Home/Home.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-a66d8dc5"], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/components/Home/Home.vue"]]);
   const _sfc_main$3 = {
     __name: "UserInfo",
     props: {
@@ -279,7 +381,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-1e7cdf7b"], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/components/UserInfo/UserInfo.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-1e7cdf7b"], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/components/UserInfo/UserInfo.vue"]]);
   const _sfc_main$2 = {
     __name: "demo1",
     props: {
@@ -322,7 +424,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/components/demo1/demo1.vue"]]);
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/components/demo1/demo1.vue"]]);
   const _sfc_main$1 = {
     __name: "index",
     setup(__props, { expose: __expose }) {
@@ -377,7 +479,7 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/pages/index/index.vue"]]);
   __definePage("pages/demo4/demo4", PagesDemo4Demo4);
   __definePage("pages/demo3/demo3", PagesDemo3Demo3);
   __definePage("pages/Demo2/Demo2", PagesDemo2Demo2);
@@ -393,7 +495,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:10", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/twinkle/Desktop/UniPluginDemo/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/twinkle/Desktop/UniPluginDemo/UniPluginDemo/App.vue"]]);
   function createApp() {
     const app = vue.createVueApp(App);
     return {

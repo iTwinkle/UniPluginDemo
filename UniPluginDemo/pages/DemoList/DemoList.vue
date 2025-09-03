@@ -17,7 +17,6 @@
 
 <script setup>
 	import {ref} from "vue";
-	const dataArray = ref([])
 	
 	const list = ref([
 	  'v-bind',
@@ -27,6 +26,7 @@
 	  'navigateTo',
 	  'reLaunch',
 	  'request',
+	  '示例1',
 	])
 	
 	// 点击某行，获取行号
@@ -59,6 +59,10 @@
 		}else if(index === 6){
 			uni.navigateTo({
 				url: `/pages/Demo6/Demo6`
+			})
+		}else if(index === 7){
+			uni.navigateTo({
+				url: `/pages/Demo7/Demo7`
 			})
 		}
 	}

@@ -21,11 +21,20 @@
 	
 	
 	function request(){
+		uni.showLoading({
+			title:"请求中"
+		})
 		uni.request({
 		  url: 'https://jsonplaceholder.typicode.com/posts',
 		  success: (res) => {
 		    console.log(res.data)
 			dataArray.value = res.data
+		  },
+		  fail: (res) => {
+		  	
+		  },
+		  complete: () => {
+		  	uni.hideLoading()
 		  }
 		})
 		
@@ -49,6 +58,7 @@
 			  id:"1"
 		  },
 		  method:"GET",
+		  timeout:5000,
 		  header:{
 			  token:"adddas",
 		  }

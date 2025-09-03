@@ -1,0 +1,14 @@
+
+<style>
+uni-view[data-v-6118f3db]{
+	background: white;
+	height: 44px;
+}
+.list-item[data-v-6118f3db] {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+.list-item[data-v-6118f3db]:hover {
+  background-color: #f0f0f0;
+}
+

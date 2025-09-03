@@ -1,17 +1,30 @@
 {
 	"pages": [ 
 		{
-			"path" : "pages/demo4/demo4",
+			"path" : "pages/Home/Home",
 			"style" : 
 			{
-				"navigationBarTitleText" : "demo4"
+				"navigationBarTitleText" : "Home"
 			}
 		},
 		{
-			"path" : "pages/demo3/demo3",
+			"path" : "pages/DemoList/DemoList",
 			"style" : 
 			{
-				"navigationBarTitleText" : "demo3"
+				"navigationBarTitleText" : "DemoList"
+			}
+		},
+		{
+			"path" : "pages/About/About",
+			"style" : 
+			{
+				"navigationBarTitleText" : "About"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
 			}
 		},
 		{
@@ -22,9 +35,31 @@
 			}
 		},
 		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
+			"path" : "pages/demo3/demo3",
+			"style" : 
+			{
+				"navigationBarTitleText" : "demo3"
+			}
+		},
+		{
+			"path" : "pages/demo4/demo4",
+			"style" : 
+			{
+				"navigationBarTitleText" : "demo4"
+			}
+		},
+		{
+			"path" : "pages/Demo5/Demo5",
+			"style" : 
+			{
+				"navigationBarTitleText" : "Demo5"
+			}
+		},
+		{
+			"path" : "pages/Demo6/Demo6",
+			"style" : 
+			{
+				"navigationBarTitleText" : "Demo6"
 			}
 		}
 	],
@@ -33,6 +68,16 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#4cd964",
+		"selectedColor": "#dd524d",
+		"backgroundColor": "#0062cc",
+		"list": [
+			{"pagePath": "pages/Home/Home","text": "首页"},
+			{"pagePath": "pages/DemoList/DemoList","text": "DemoList"},
+			{"pagePath": "pages/About/About","text": "关于"}
+		]
 	},
 	"uniIdRouter": {}
 }
